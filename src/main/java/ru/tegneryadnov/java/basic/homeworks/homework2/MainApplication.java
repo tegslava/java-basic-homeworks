@@ -5,7 +5,6 @@ public class MainApplication {
         multiPrint(3, "Строка для размножения");
         System.out.println();
         int[] iArr = {1, 4, 6, 5, 9, 0};
-        //new int[]{1, 4, 6, 5, 9, 0}
         arrayItemsSum(iArr);
         System.out.println();
         fillArray(5, iArr);
@@ -26,10 +25,6 @@ public class MainApplication {
      * значение которых больше 5, и печатающий полученную сумму в консоль.
      * */
     private static void arrayItemsSum(int[] iArr) {
-        if (iArr == null || iArr.length == 0) {
-            System.out.println("Проверьте параметры для arrayItemsSum(int[] iArr)!");
-            return;
-        }
         int sum = 0;
         for (int i = 0; i < iArr.length; i++) {
             if (iArr[i] > 5) {
