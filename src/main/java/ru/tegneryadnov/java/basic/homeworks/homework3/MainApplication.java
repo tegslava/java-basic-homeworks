@@ -53,6 +53,8 @@ public class MainApplication {
         array = new int[][]{{1, 2, 3}, null, {1024, 77, -20}, {1, 0, 1000, 21, -100}};
         printArrToLine(array);
         System.out.println("Сумма элементов второй строки массива: " + sumOfLineElements(array, 1));
+
+        print2DMatrix(generateDiagonalNumberMatrix(4, 4));
     }
 
     /**
@@ -227,11 +229,29 @@ public class MainApplication {
      * @return возвращает сумму элементов строки с индексом lineIndex
      */
     public static long sumOfLineElements(int[][] arr, int lineIndex) {
-        if ((arr[lineIndex] == null) || (arr.length < lineIndex + 1)) return -1l;
+        if ((arr[lineIndex] == null) || (arr.length < lineIndex + 1)) return -1L;
         long sum = 0;
         for (int i = 0; i < arr[lineIndex].length; i++) {
             sum += arr[lineIndex][i];
         }
         return sum;
+    }
+
+    public static int[][] generateDiagonalNumberMatrix(int m, int n) {
+        int[][] matrix = new int[m][n];
+        int currentNumber = 1;
+
+        for (int i = 0; i < m + n - 1; i++) {
+            for (int j = 0; j <= i; j++) {
+                int x = j;
+                int y = i - j;
+                if (x < m && y < n) {
+                    matrix[x][y] = currentNumber;
+                    currentNumber++;
+                }
+            }
+        }
+
+        return matrix;
     }
 }
