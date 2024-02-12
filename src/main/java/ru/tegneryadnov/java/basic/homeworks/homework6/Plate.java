@@ -25,18 +25,18 @@ public class Plate {
     }
 
     public boolean reduceFood(double amountFood) {
-        currAmountFood -= amountFood;
-        if (currAmountFood >= 0) {
+        double tmpAmountFood = currAmountFood - amountFood;
+        if (tmpAmountFood >= 0) {
+            currAmountFood = tmpAmountFood;
             return true;
         } else {
-            currAmountFood = 0;
             return false;
         }
     }
 
     @Override
     public String toString() {
-        return "В миске объемом: " + volume + " ед насывано еды: " + currAmountFood+ " ед";
+        return "В миске объемом: " + volume + " ед насыпано корма: " + currAmountFood + " ед";
     }
 }
 

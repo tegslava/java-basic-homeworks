@@ -8,12 +8,10 @@ public class MainApplication {
                 new Cat("Васька", 65)
         };
         Plate plate = new Plate(300);
-        System.out.println(plate);
-        feedingСats(cats, plate);
-        System.out.println("Подсыпем еды...");
+        feeding(cats, plate);
+        System.out.println("Подсыпем корма...");
         plate.addFood(400);
-        System.out.println(plate);
-        feedingСats(cats, plate);
+        feeding(cats, plate);
     }
 
     /**
@@ -22,11 +20,11 @@ public class MainApplication {
      * @param cats  массив котов
      * @param plate миска с едой
      */
-    private static void feedingСats(Cat[] cats, Plate plate) {
-        System.out.println("Кис-кис-кис... :)");
+    private static void feeding(Cat[] cats, Plate plate) {
+        System.out.println(plate);
+        System.out.println("Кис-кис-кис...");
         for (int i = 0; i < cats.length; i++) {
-            plate.reduceFood(cats[i].eat(plate.getCurrAmountFood()));
-            System.out.println(cats[i].getName() + (cats[i].isSatiety() ? " не голоден." : " голоден."));
+            cats[i].feedingСat(plate);
         }
         System.out.println(plate);
     }

@@ -43,4 +43,14 @@ public class Cat {
             return 0;
         }
     }
+
+    /**
+     * Кормление котика
+     *
+     * @param plate миска с едой
+     */
+    public void feedingСat(Plate plate) {
+        plate.reduceFood(eat(plate.getCurrAmountFood()));
+        System.out.println(name + (isSatiety() ? " не голоден." : " голоден."));
+    }
 }
