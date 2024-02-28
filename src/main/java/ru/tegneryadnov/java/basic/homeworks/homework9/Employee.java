@@ -5,9 +5,7 @@ public class Employee {
     private int age;
 
     public String getName() {
-
         return name;
-
     }
 
     public int getAge() {
@@ -23,5 +21,4 @@ public class Employee {
     public String toString() {
         return String.format("Имя: %-35s; Возраст: %d", name, age);
     }
-
 }

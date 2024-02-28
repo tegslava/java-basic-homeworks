@@ -49,12 +49,6 @@ public class MainApplication {
         System.out.println("Самый молодой сотрудник: " + youngestEmployee(listOfEmployees));
     }
 
-    /*
-     * Реализуйте метод, принимающий в качестве аргументов числа min и max, и
-     * возвращающий ArrayList с набором последовательных значений в указанном
-     * диапазоне (min и max включительно, шаг - 1);
-     */
-
     /**
      * Возвращает ArrayList с набором последовательных значений в заданном диапазоне
      *
@@ -63,7 +57,6 @@ public class MainApplication {
      * @param step шаг
      * @return возвращает ArrayList c набором последовательных значений
      */
-
     public static List<Integer> getSequenceList(int min, int max, int step) {
         List<Integer> list = new ArrayList<>();
         for (int i = max; i >= min; i += step) {
@@ -71,11 +64,6 @@ public class MainApplication {
         }
         return list;
     }
-
-    /*
-     * Реализуйте метод, принимающий в качестве аргумента список целых чисел,
-     * суммирующий все элементы, значение которых больше 5, и возвращающий сумму;
-     */
 
     /**
      * Возвращает сумму элементов списка, больше значения trashHold;
@@ -85,20 +73,17 @@ public class MainApplication {
      * @return сумма элементов;
      */
     public static long getSumOfListItems(List<Integer> inputList, int trashHold) {
-        if (inputList == null)
+        if (inputList == null) {
             throw new IllegalArgumentException("На входе ожидался список целых чисел!");
+        }
         long sum = 0;
-        for (Integer i : inputList)
-            if ((i != null) && (i > trashHold))
+        for (Integer i : inputList) {
+            if ((i != null) && (i > trashHold)) {
                 sum += i;
+            }
+        }
         return sum;
     }
-
-    /*
-     * Реализуйте метод, принимающий в качестве аргументов целое число и ссылку на
-     * список, метод должен переписать каждую заполненную ячейку списка указанным
-     * числом;
-     */
 
     /**
      * Заменяет указанным числом каждую заполненную ячейку переданного списка
@@ -107,32 +92,31 @@ public class MainApplication {
      * @param fillingList список
      */
     public static void fillListWithNumber(int replNumber, List<Integer> fillingList) {
-        if (fillingList == null)
+        if (fillingList == null) {
             throw new IllegalArgumentException("На входе ожидался список целых чисел!");
-        for (int i = 0; i < fillingList.size(); i++)
+        }
+        for (int i = 0; i < fillingList.size(); i++) {
             if (fillingList.get(i) != null) {
                 fillingList.set(i, replNumber);
             }
+        }
     }
-
-    /*
-     * Реализуйте метод, принимающий в качестве аргументов целое число и ссылку на
-     * список, увеличивающий каждый элемент списка на указанное число;
-     */
 
     /**
      * Увеличивает каждый элемент списка на заданное число
      *
-     * @param increment  заданное число
+     * @param increment   заданное число
      * @param fillingList список
      */
     public static void incrementListItemsByNumber(int increment, List<Integer> fillingList) {
-        if (fillingList == null)
+        if (fillingList == null) {
             throw new IllegalArgumentException("На входе ожидался список целых чисел!");
-        for (int i = 0; i < fillingList.size(); i++)
+        }
+        for (int i = 0; i < fillingList.size(); i++) {
             if (fillingList.get(i) != null) {
                 fillingList.set(i, fillingList.get(i) + increment);
             }
+        }
     }
 
     /**
@@ -156,11 +140,6 @@ public class MainApplication {
         }
         return listOfEmployees;
     }
-
-    /*
-     * Реализуйте метод, принимающий в качестве аргумента список сотрудников, и
-     * возвращающий список их имен;
-     */
 
     /**
      * По списку сотрудников формирует список имен сотрудников
@@ -189,12 +168,6 @@ public class MainApplication {
         return (int) (Math.random() * ++max) + min;
     }
 
-    /*
-     * Реализуйте метод, принимающий в качестве аргумента список сотрудников и
-     * минимальный возраст, и возвращающий список сотрудников, возраст которых
-     * больше либо равен указанному аргументу;
-     */
-
     /**
      * Из полученного списка сотрудников, формирует список сотрудников, возраст
      * которых больше, либо равен пороговому
@@ -207,8 +180,9 @@ public class MainApplication {
         verifiedList(listOfEmployees);
         List<Employee> selectedList = new ArrayList<>();
         for (Employee employee : listOfEmployees) {
-            if (employee.getAge() >= trashHold)
+            if (employee.getAge() >= trashHold) {
                 selectedList.add(employee);
+            }
         }
         return selectedList;
     }
@@ -225,12 +199,6 @@ public class MainApplication {
             }
         }
     }
-
-    /*
-     * Реализуйте метод, принимающий в качестве аргумента список сотрудников и
-     * минимальный средний возраст, и проверяющий, что средний возраст сотрудников
-     * превышает указанный аргумент;
-     */
 
     /**
      * Проверяет, превышает ли средний возраст сотрудников из списка заданный
@@ -250,11 +218,6 @@ public class MainApplication {
         return calcAvrAge > avrAge;
     }
 
-    /*
-     * Реализуйте метод, принимающий в качестве аргумента список сотрудников, и
-     * возвращающий ссылку на самого молодого сотрудника.
-     */
-
     /**
      * Возвращает самого молодого сотрудника из списка
      *
@@ -265,8 +228,9 @@ public class MainApplication {
         verifiedList(listOfEmployees);
         Employee youngest = listOfEmployees.get(0);
         for (int i = 1; i < listOfEmployees.size(); i++) {
-            if (listOfEmployees.get(i).getAge() < youngest.getAge())
+            if (listOfEmployees.get(i).getAge() < youngest.getAge()) {
                 youngest = listOfEmployees.get(i);
+            }
         }
         return youngest;
     }
@@ -277,11 +241,13 @@ public class MainApplication {
      * @param listOfEmployees список сотрудников
      */
     public static void verifiedList(List<Employee> listOfEmployees) {
-        if ((listOfEmployees == null) || (listOfEmployees.isEmpty()))
+        if ((listOfEmployees == null) || (listOfEmployees.isEmpty())) {
             throw new IllegalArgumentException("На входе ожидался заполненный список сотрудников!");
+        }
         for (Employee employee : listOfEmployees) {
-            if (employee == null)
+            if (employee == null) {
                 throw new IllegalArgumentException("В списке сотрудников не может быть null объектов!");
+            }
         }
     }
 }
