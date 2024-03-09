@@ -1,4 +1,4 @@
-package ru.tegneryadnov.java.basic.homeworks.homework12_1;
+package ru.tegneryadnov.java.basic.homeworks.homework12;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
