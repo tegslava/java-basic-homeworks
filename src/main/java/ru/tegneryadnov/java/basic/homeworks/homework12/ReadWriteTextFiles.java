@@ -3,6 +3,9 @@ package ru.tegneryadnov.java.basic.homeworks.homework12;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Класс для утилит чтения, записи текстовых файлов
+ */
 public class ReadWriteTextFiles {
     /**
      * Запись в файл строкового массива
