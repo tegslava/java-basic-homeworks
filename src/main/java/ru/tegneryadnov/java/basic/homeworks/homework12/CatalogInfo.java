@@ -43,6 +43,34 @@ public class CatalogInfo {
     }
 
     /**
+     * Отображает структуру каталога
+     * Эксперимент с последовательной сортировкой списка
+     * @param currentDir
+     */
+    public static void show_(File currentDir) {
+        if (currentDir == null) {
+            throw new IllegalArgumentException("currentDir must not be null!");
+        }
+        List<FileInform> fileInforms = getFileInforms(currentDir);
+        fileInforms.sort((new Comparator<FileInform>() {
+            @Override
+            public int compare(FileInform o1, FileInform o2) {
+                return o1.fileType.compareTo(o2.fileType);
+            }
+        }).thenComparing(new Comparator<FileInform>() {
+            @Override
+            public int compare(FileInform o1, FileInform o2) {
+                return o1.file.getName().compareTo(o2.file.getName());
+            }
+        }));
+        System.out.println("Структура каталога:");
+        for (
+                FileInform fileInform : fileInforms) {
+            System.out.println(fileInform);
+        }
+    }
+
+    /**
      * Возвращает список полных имен файлов в каталоге currentDir, с раширением fileExt
      *
      * @param currentDir объект типа File
@@ -85,4 +113,18 @@ public class CatalogInfo {
         extension = name.substring(startIndex + 1, name.length());
         return extension;
     }
+
+    /**
+     * Для подготовки тестовых данных в каталоге currentDir
+     * @param currentDir объект типа File
+     */
+    public static void initTest(File currentDir) {
+        String[] sArr1 = {"Тестовые записи", "для file1.txt "};
+        String[] sArr2 = {"Тестовые записи", "для file2.txt "};
+        String[] sArr3 = {"Тестовые записи", "для file3.txt "};
+        ReadWriteTextFiles.bufferedOutputStreamArrWriter("file1.txt", sArr1, false);
+        ReadWriteTextFiles.bufferedOutputStreamArrWriter("file2.txt", sArr2, false);
+        ReadWriteTextFiles.bufferedOutputStreamArrWriter("file3.txt", sArr3, false);
+    }
+
 }

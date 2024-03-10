@@ -2,11 +2,15 @@ package ru.tegneryadnov.java.basic.homeworks.homework12;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 /**
  * Класс для утилит чтения, записи текстовых файлов
  */
 public class ReadWriteTextFiles {
+    private static final int AttemptsFileSelect = 10;
+    private static final int AttemptsFileEdit = 10;
+
     /**
      * Запись в файл строкового массива
      *
@@ -61,10 +65,81 @@ public class ReadWriteTextFiles {
                 System.out.print((char) n);
                 n = in.read();
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
+    /**
+     * Запрашивает у пользователя строку и добавляет ее в текстовый файл
+     *
+     * @param scanner
+     * @param inputFileName
+     * @return если пользователь отказался от редактирования, возвращает false
+     */
+    public static boolean appendLineToFile(Scanner scanner, String inputFileName) {
+        boolean continueEdit = true;
+        System.out.printf("Введите строку для добавления в файл. \"end\" - выход)\n", inputFileName);
+        System.out.print(">");
+        String inputLine = scanner.nextLine();
+        if (inputLine.trim().equals("end")) {
+            continueEdit = false;
+            return continueEdit;
+        }
+        ReadWriteTextFiles.bufferedOutputStreamLineWriter(inputFileName, inputLine, true);
+        return continueEdit;
+    }
+
+    /**
+     * Выбор файла для обработки или выход
+     *
+     * @param scanner
+     * @return true - продолжить
+     */
+    public static String selectFileName(Scanner scanner) {
+        System.out.print("Введите имя файла для редактирования, (для выхода из программы введите \"end\"): ");
+        String inputFileName = scanner.nextLine();
+        return inputFileName;
+    }
+
+    /**
+     * Выбор файла и добавление строки. Количество попыток редактирования ограничено
+     * константами
+     *     private static final int AttemptsFileSelect = 10;
+     *     private static final int AttemptsFileEdit = 10;
+     */
+    public static void fileEdit() {
+        try (Scanner scanner = new Scanner(System.in);) {
+            int i = 0;
+            for (; i < AttemptsFileSelect; i++) {
+                System.out.printf("Выбор файла для редактирования. Попытка %d/%d\n", i + 1, AttemptsFileSelect);
+                String fileName = selectFileName(scanner);
+                if (fileName.equals("end")) {
+                    break;
+                }
+                if (!(new File(fileName)).exists()) {
+                    System.out.printf("Файл %s не найден.\n", fileName);
+                    continue;
+                }
+                System.out.printf("Выбран файл \"%s\". Вывод на экран:\n", fileName);
+                bufferedInputStreamReader(fileName);
+                int j = 0;
+                for (; j < AttemptsFileEdit; j++) {
+                    System.out.printf("Добавление строки в файл \"%s\". Попытка %d/%d\n", fileName, j + 1, AttemptsFileEdit);
+                    if (!appendLineToFile(scanner, fileName)) {
+                        break;
+                    }
+                }
+                if (j == AttemptsFileEdit) {
+                    System.out.println("Исчерпано количество попыток редактирования файла");
+                }
+            }
+            if (i == AttemptsFileSelect) {
+                System.out.println("Исчерпано количество попыток выбора файла");
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
