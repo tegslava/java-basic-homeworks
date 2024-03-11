@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Класс для утилит информирования о структуре каталога
@@ -14,7 +15,7 @@ public class CatalogInfo {
             throw new IllegalArgumentException("currentDir must not be null!");
         }
         List<FileInform> fileInforms = new ArrayList<>();
-        for (File file : currentDir.listFiles()) {
+        for (File file : Objects.requireNonNull(currentDir.listFiles())) {
             fileInforms.add(new FileInform(file));
         }
         return fileInforms;
@@ -30,12 +31,14 @@ public class CatalogInfo {
             throw new IllegalArgumentException("currentDir must not be null!");
         }
         List<FileInform> fileInforms = getFileInforms(currentDir);
-        fileInforms.sort(new Comparator<FileInform>() {
+  /*      fileInforms.sort(new Comparator<>() {
             @Override
             public int compare(FileInform o1, FileInform o2) {
                 return o1.fileType.compareTo(o2.fileType);
             }
-        });
+        });*/
+
+        fileInforms.sort(Comparator.comparing((FileInform o) -> o.fileType));
         System.out.println("Структура каталога:");
         for (FileInform fileInform : fileInforms) {
             System.out.println(fileInform);
@@ -45,24 +48,13 @@ public class CatalogInfo {
     /**
      * Отображает структуру каталога
      * Эксперимент с последовательной сортировкой списка
-     * @param currentDir
      */
     public static void show_(File currentDir) {
         if (currentDir == null) {
             throw new IllegalArgumentException("currentDir must not be null!");
         }
         List<FileInform> fileInforms = getFileInforms(currentDir);
-        fileInforms.sort((new Comparator<FileInform>() {
-            @Override
-            public int compare(FileInform o1, FileInform o2) {
-                return o1.fileType.compareTo(o2.fileType);
-            }
-        }).thenComparing(new Comparator<FileInform>() {
-            @Override
-            public int compare(FileInform o1, FileInform o2) {
-                return o1.file.getName().compareTo(o2.file.getName());
-            }
-        }));
+        fileInforms.sort(Comparator.comparing((FileInform o) -> o.fileType).thenComparing(o -> o.file.getName()));
         System.out.println("Структура каталога:");
         for (
                 FileInform fileInform : fileInforms) {
@@ -71,7 +63,7 @@ public class CatalogInfo {
     }
 
     /**
-     * Возвращает список полных имен файлов в каталоге currentDir, с раширением fileExt
+     * Возвращает список полных имен файлов в каталоге currentDir, с расширением fileExt
      *
      * @param currentDir объект типа File
      * @param fileExt    расширение файла, строковое значение
@@ -98,8 +90,7 @@ public class CatalogInfo {
     /**
      * Возвращает расширение файла file
      *
-     * @param file
-     * @return раширения файла, строка
+     * @return расширения файла, строка
      */
     private static String getFileExtension(File file) {
         if (file == null) {
@@ -110,15 +101,14 @@ public class CatalogInfo {
         int startIndex = name.lastIndexOf(".");
         if (startIndex < 0)
             return extension;
-        extension = name.substring(startIndex + 1, name.length());
+        extension = name.substring(startIndex + 1);
         return extension;
     }
 
     /**
-     * Для подготовки тестовых данных в каталоге currentDir
-     * @param currentDir объект типа File
+     * Для подготовки тестовых данных
      */
-    public static void initTest(File currentDir) {
+    public static void initTest() {
         String[] sArr1 = {"Тестовые записи", "для file1.txt "};
         String[] sArr2 = {"Тестовые записи", "для file2.txt "};
         String[] sArr3 = {"Тестовые записи", "для file3.txt "};

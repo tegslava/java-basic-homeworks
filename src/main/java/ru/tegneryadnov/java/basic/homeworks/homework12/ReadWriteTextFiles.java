@@ -15,8 +15,8 @@ public class ReadWriteTextFiles {
      * Запись в файл строкового массива
      *
      * @param fileName имя файла
-     * @param lines    cтроковый массив для записи
-     * @param append   добавлять новыйе строки или перезаписывать файл
+     * @param lines    строковый массив для записи
+     * @param append   добавлять новые строки или перезаписывать файл
      */
     public static void bufferedOutputStreamArrWriter(String fileName, String[] lines, boolean append) {
         if ((fileName == null) || (fileName.isEmpty())) {
@@ -28,8 +28,8 @@ public class ReadWriteTextFiles {
         try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fileName, append))) {
             for (String line : lines) {
                 byte[] buffer = (line + "\n").getBytes(StandardCharsets.UTF_8);
-                for (int i = 0; i < buffer.length; i++) {
-                    out.write(buffer[i]);
+                for (byte b : buffer) {
+                    out.write(b);
                 }
             }
         } catch (IOException e) {
@@ -41,8 +41,8 @@ public class ReadWriteTextFiles {
      * Запись в файл строки
      *
      * @param fileName имя файла
-     * @param line     cтрока для записи
-     * @param append   добавлять новыйе строки или перезаписывать файл
+     * @param line     строка для записи
+     * @param append   добавлять новые строки или перезаписывать файл
      */
     public static void bufferedOutputStreamLineWriter(String fileName, String line, boolean append) {
         bufferedOutputStreamArrWriter(fileName, new String[]{line}, append);
@@ -59,7 +59,7 @@ public class ReadWriteTextFiles {
         }
         try (var fis = new FileInputStream(fileName);
              var bis = new BufferedInputStream(fis);
-             var in = new InputStreamReader(bis);) {
+             var in = new InputStreamReader(bis)) {
             int n = in.read();
             while (n != -1) {
                 System.out.print((char) n);
@@ -73,18 +73,15 @@ public class ReadWriteTextFiles {
     /**
      * Запрашивает у пользователя строку и добавляет ее в текстовый файл
      *
-     * @param scanner
-     * @param inputFileName
      * @return если пользователь отказался от редактирования, возвращает false
      */
     public static boolean appendLineToFile(Scanner scanner, String inputFileName) {
         boolean continueEdit = true;
-        System.out.printf("Введите строку для добавления в файл. \"end\" - выход)\n", inputFileName);
+        System.out.printf("Введите строку для добавления в файл %s. \"end\" - выход)\n", inputFileName);
         System.out.print(">");
         String inputLine = scanner.nextLine();
         if (inputLine.trim().equals("end")) {
-            continueEdit = false;
-            return continueEdit;
+            return false;
         }
         ReadWriteTextFiles.bufferedOutputStreamLineWriter(inputFileName, inputLine, true);
         return continueEdit;
@@ -93,13 +90,11 @@ public class ReadWriteTextFiles {
     /**
      * Выбор файла для обработки или выход
      *
-     * @param scanner
      * @return true - продолжить
      */
     public static String selectFileName(Scanner scanner) {
         System.out.print("Введите имя файла для редактирования, (для выхода из программы введите \"end\"): ");
-        String inputFileName = scanner.nextLine();
-        return inputFileName;
+        return scanner.nextLine();
     }
 
     /**
@@ -109,7 +104,7 @@ public class ReadWriteTextFiles {
      *     private static final int AttemptsFileEdit = 10;
      */
     public static void fileEdit() {
-        try (Scanner scanner = new Scanner(System.in);) {
+        try (Scanner scanner = new Scanner(System.in)) {
             int i = 0;
             for (; i < AttemptsFileSelect; i++) {
                 System.out.printf("Выбор файла для редактирования. Попытка %d/%d\n", i + 1, AttemptsFileSelect);
