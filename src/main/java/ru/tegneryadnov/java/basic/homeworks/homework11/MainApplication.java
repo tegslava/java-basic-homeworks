@@ -1,9 +1,8 @@
-import ru.tegneryadnov.java.basic.homeworks.homework11.PersonDataBase;
-import ru.tegneryadnov.java.basic.homeworks.homework11.SortArray;
+package ru.tegneryadnov.java.basic.homeworks.homework11;
 
 import java.util.Arrays;
 
-public class Application {
+public class MainApplication {
     public static void main(String[] args) {
         PersonDataBase personDataBase = PersonDataBase.getInstance();
         PersonDataBase.testPersonDataBase(personDataBase);
