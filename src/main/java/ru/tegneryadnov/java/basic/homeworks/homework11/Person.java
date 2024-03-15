@@ -57,10 +57,10 @@ public class Person {
     /**
      * Генерирует тестового работника
      *
-     * @param ID идентификатор работника
+     * @param id идентификатор работника
      * @return объект типа Person
      */
-    public static Person generatePerson(Long ID) {
+    public static Person generatePerson(Long id) {
         String[] firstNames = {"Алексей", "Петр", "Василий", "Иван", "Роман", "Андрей", "Вячеслав"};
         String[] surNames = {"Алибабаевич", "Георгиевич", "Константинович", "Михайлович", "Иванович"};
         String[] lastNames = {"Чайковский", "Суриков", "Айвазовский", "Шишкин", "Пушкин", "Лермонтов"};
@@ -70,7 +70,7 @@ public class Person {
         String personName = firstNames[j] + " " + surNames[l] + " " + lastNames[k];
         int m = rnd(0, Position.values().length - 1);
         Position personPosition = Position.getByOrdinal(m);
-        return new Person(personName, personPosition, ID);
+        return new Person(personName, personPosition, id);
     }
 
     /**

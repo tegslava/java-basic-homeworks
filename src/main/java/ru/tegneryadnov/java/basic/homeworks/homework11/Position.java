@@ -6,6 +6,7 @@ public enum Position {
 
     /**
      * Поиск элемента enum по индексу
+     *
      * @param i индекс
      * @return возвращает элемент перечисления
      */
@@ -15,4 +16,4 @@ public enum Position {
         }
         return null;
     }
-};
+}

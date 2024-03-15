@@ -32,6 +32,7 @@ public class PersonDataBase {
 
     /**
      * Возвращает инстанс базы
+     *
      * @return инстанс базы
      */
     public static PersonDataBase getInstance() {
@@ -85,7 +86,7 @@ public class PersonDataBase {
      *
      * @return Long id
      */
-    public long getSeqNumber() {
+    public static long getSeqNumber() {
         return ++seqNumber;
     }
 
@@ -96,9 +97,9 @@ public class PersonDataBase {
      * @return список записей о работнике
      */
     public static List<Person> firstFewEntries(int cnt) {
-        if (persons.size() == 0) {
+        if (persons.isEmpty()) {
             System.out.println("База пустая.");
-            return null;
+            return Collections.emptyList();
         }
         List<Person> list = new ArrayList<>();
         for (long i = 1; i <= cnt; i++) {
@@ -121,9 +122,8 @@ public class PersonDataBase {
         System.out.printf("Работник с табельным номером %d:\n", id);
         System.out.println(personDataBase.findById(id));
         System.out.println();
-        personDataBase.firstFewEntries(10).forEach(p -> {
-            System.out.printf("%s - %s\n", p,
-                    (PersonDataBase.isManager(p) ? "Менеджер" : "Линейный персонал"));
-        });
+        personDataBase.firstFewEntries(10).forEach(p ->
+                System.out.printf("%s - %s\n", p,
+                        (PersonDataBase.isManager(p) ? "Менеджер" : "Линейный персонал")));
     }
 }
