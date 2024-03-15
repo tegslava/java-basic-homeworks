@@ -9,7 +9,7 @@ public class PersonDataBase {
     private static PersonDataBase instance;
     private static final Set<Position> managersPositions = new HashSet<>();
     private static final Set<Position> employeePosition = new HashSet<>();
-    private static Map<Long, Person> persons = new HashMap<>();
+    private static final Map<Long, Person> persons = new HashMap<>();
     private static Long seqNumber;
 
     static {
@@ -31,9 +31,9 @@ public class PersonDataBase {
     }
 
     /**
-     * Возвращает инстанс базы
+     * Возвращает экземпляр базы
      *
-     * @return инстанс базы
+     * @return экземпляр базы
      */
     public static PersonDataBase getInstance() {
         if (instance == null) {
@@ -43,12 +43,12 @@ public class PersonDataBase {
     }
 
     /**
-     * O(1)
+     * Поиск в базе по id работника O(1)
      *
-     * @param id
-     * @return
+     * @param id работника
+     * @return объект типа Person
      */
-    public Person findById(Long id) {
+    public static Person findById(Long id) {
         return persons.get(id);
     }
 
@@ -62,7 +62,7 @@ public class PersonDataBase {
     }
 
     /**
-     * Определяет относится ли должность работника к менеджерам
+     * Определяет, относится ли должность работника к менеджерам
      *
      * @param person объект типа Person
      * @return возвращает истина/ложь
@@ -72,7 +72,7 @@ public class PersonDataBase {
     }
 
     /**
-     * Определяет относится ли должность работника к линейному персоналу
+     * Определяет, относится ли должность работника к линейному персоналу
      *
      * @param person объект типа Person
      * @return возвращает истина/ложь
@@ -91,7 +91,7 @@ public class PersonDataBase {
     }
 
     /**
-     * Возвращает из базы первые сnt записей
+     * Возвращает из базы первые cnt записей
      *
      * @param cnt количество возвращаемых записей
      * @return список записей о работнике
@@ -111,18 +111,18 @@ public class PersonDataBase {
     /**
      * Порождаем набор сотрудников, тестируем поиск по id м функцию определения типа должности
      *
-     * @param personDataBase получам объект PersonDataBase
+     * @param personDataBase получаем объект PersonDataBase
      */
     public static void testPersonDataBase(PersonDataBase personDataBase) {
         int personCount = 1000_000;
         for (int i = 0; i < personCount; i++) {
-            personDataBase.addPerson(Person.generatePerson(personDataBase.getSeqNumber()));
+            personDataBase.addPerson(Person.generatePerson(PersonDataBase.getSeqNumber()));
         }
         long id = Person.rnd(1, personCount);
         System.out.printf("Работник с табельным номером %d:\n", id);
-        System.out.println(personDataBase.findById(id));
+        System.out.println(PersonDataBase.findById(id));
         System.out.println();
-        personDataBase.firstFewEntries(10).forEach(p ->
+        PersonDataBase.firstFewEntries(10).forEach(p ->
                 System.out.printf("%s - %s\n", p,
                         (PersonDataBase.isManager(p) ? "Менеджер" : "Линейный персонал")));
     }
