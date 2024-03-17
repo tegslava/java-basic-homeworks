@@ -19,7 +19,7 @@ public class Server {
             outputStream.writeUTF("Вы подключились к on-line калькулятору.\nДоступны математические операции: +,-,*,/");
             String userInput = inputStream.readUTF();
             System.out.println(userInput);
-            String result = Calculator.showResultOfExpression(userInput);
+            String result = "Результат вычислений: " + Calculator.showResultOfExpression(userInput);
             System.out.println("Результат вычислений: " + result);
             outputStream.writeUTF(result);
             outputStream.flush();
