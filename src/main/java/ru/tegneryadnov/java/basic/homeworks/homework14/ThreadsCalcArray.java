@@ -7,7 +7,7 @@ import java.util.List;
  * Класс, для расчета и заливки данных в массив, в потоках
  */
 public class ThreadsCalcArray {
-    private List<Thread> thrds;
+    private final List<Thread> thrds;
 
     /**
      * Порождает заданное количество потоков для расчета
@@ -46,8 +46,8 @@ public class ThreadsCalcArray {
     /**
      * Создает и запускает потоки на расчет
      *
-     * @param array
-     * @param threadsCount
+     * @param array  массив Double
+     * @param threadsCount количество запускаемых потоков
      */
     public static void createAndStartThreadsCalc(Double[] array, int threadsCount) {
         ThreadsCalcArray threadCA = new ThreadsCalcArray(array, threadsCount);
@@ -70,7 +70,33 @@ public class ThreadsCalcArray {
      */
     public static void showArray(Double[] array, int startPos, int count) {
         for (int i = startPos; (i < startPos + count) & (i < array.length); i++) {
-            System.out.printf("array[%d] = %8f\n", i, array[i]);
+            System.out.printf("array[%d] = %9.6f\n", i, array[i]);
         }
+    }
+
+    /**
+     * Для теста посчитаем массив в 1-м потоке, выведем первые 50 и последние 50
+     * рассчитанных элемента;
+     * Для теста посчитаем массив в maxThreadsCount потоках, выведем первые 50 и последние 50
+     * рассчитанных элемента
+     * @param array входящий массив Double
+     * @param maxThreadsCount количество потоков для второго теста
+     */
+    public static void test(Double[] array, int maxThreadsCount){
+        Double[] internalArray = array;
+        ThreadsCalcArray.createAndStartThreadsCalc(internalArray, 1);
+        System.out.println();
+        System.out.println("Для контроля, первые 50 элементов массива:");
+        ThreadsCalcArray.showArray(internalArray, 0, 50);
+        System.out.println();
+        System.out.println("Для контроля, последние 50 элементов массива:");
+        ThreadsCalcArray.showArray(internalArray, internalArray.length - 50, 50);
+        internalArray = array;
+        ThreadsCalcArray.createAndStartThreadsCalc(internalArray, maxThreadsCount);
+        System.out.println("Для контроля, первые 50 элементов массива:");
+        ThreadsCalcArray.showArray(internalArray, 0, 50);
+        System.out.println();
+        System.out.println("Для контроля, последние 50 элементов массива:");
+        ThreadsCalcArray.showArray(internalArray, internalArray.length - 50, 50);
     }
 }
