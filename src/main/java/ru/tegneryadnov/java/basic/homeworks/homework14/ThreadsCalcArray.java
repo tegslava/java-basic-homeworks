@@ -46,7 +46,7 @@ public class ThreadsCalcArray {
     /**
      * Создает и запускает потоки на расчет
      *
-     * @param array  массив Double
+     * @param array        массив Double
      * @param threadsCount количество запускаемых потоков
      */
     public static void createAndStartThreadsCalc(Double[] array, int threadsCount) {
@@ -75,14 +75,13 @@ public class ThreadsCalcArray {
     }
 
     /**
-     * Для теста посчитаем массив в 1-м потоке, выведем первые 50 и последние 50
-     * рассчитанных элемента;
      * Для теста посчитаем массив в maxThreadsCount потоках, выведем первые 50 и последние 50
      * рассчитанных элемента
-     * @param internalArray входящий массив Double
-     * @param maxThreadsCount количество потоков для второго теста
+     *
+     * @param internalArray   входящий массив Double
+     * @param maxThreadsCount количество потоков для теста
      */
-    public static void test(Double[] internalArray, int maxThreadsCount){
+    public static void test(Double[] internalArray, int maxThreadsCount) {
         ThreadsCalcArray.createAndStartThreadsCalc(internalArray, maxThreadsCount);
         System.out.println();
         System.out.println("Для контроля, первые 50 элементов массива:");
