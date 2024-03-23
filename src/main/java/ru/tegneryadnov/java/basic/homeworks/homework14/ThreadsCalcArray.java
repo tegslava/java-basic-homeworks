@@ -16,7 +16,7 @@ public class ThreadsCalcArray {
      * @param threadsCount количество потоков
      * @return возвращает список потоков, готовых к расчету
      */
-    public List<Thread> getThreadsList(Double[] array, int threadsCount) {
+    private List<Thread> getThreadsList(Double[] array, int threadsCount) {
         List<Thread> thrds = new ArrayList<>();
         int count = array.length / threadsCount;
         for (int i = 0; i < threadsCount; i++) {
@@ -39,7 +39,7 @@ public class ThreadsCalcArray {
         return thrds;
     }
 
-    public ThreadsCalcArray(Double[] array, int threadsCount) {
+    private ThreadsCalcArray(Double[] array, int threadsCount) {
         thrds = getThreadsList(array, threadsCount);
     }
 
@@ -79,20 +79,12 @@ public class ThreadsCalcArray {
      * рассчитанных элемента;
      * Для теста посчитаем массив в maxThreadsCount потоках, выведем первые 50 и последние 50
      * рассчитанных элемента
-     * @param array входящий массив Double
+     * @param internalArray входящий массив Double
      * @param maxThreadsCount количество потоков для второго теста
      */
-    public static void test(Double[] array, int maxThreadsCount){
-        Double[] internalArray = array;
-        ThreadsCalcArray.createAndStartThreadsCalc(internalArray, 1);
-        System.out.println();
-        System.out.println("Для контроля, первые 50 элементов массива:");
-        ThreadsCalcArray.showArray(internalArray, 0, 50);
-        System.out.println();
-        System.out.println("Для контроля, последние 50 элементов массива:");
-        ThreadsCalcArray.showArray(internalArray, internalArray.length - 50, 50);
-        internalArray = array;
+    public static void test(Double[] internalArray, int maxThreadsCount){
         ThreadsCalcArray.createAndStartThreadsCalc(internalArray, maxThreadsCount);
+        System.out.println();
         System.out.println("Для контроля, первые 50 элементов массива:");
         ThreadsCalcArray.showArray(internalArray, 0, 50);
         System.out.println();
