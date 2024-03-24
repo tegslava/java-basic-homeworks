@@ -12,13 +12,13 @@ public class ThreadsCalcArray {
     /**
      * Порождает заданное количество потоков для расчета
      *
-     * @param array        массив Double для хранения расчитанных данных
+     * @param dArray        массив Double для хранения расчитанных данных
      * @param threadsCount количество потоков
      * @return возвращает список потоков, готовых к расчету
      */
-    private List<Thread> getThreadsList(Double[] array, int threadsCount) {
+    private List<Thread> getThreadsList(Double[] dArray, int threadsCount) {
         List<Thread> thrds = new ArrayList<>();
-        int count = array.length / threadsCount;
+        int count = dArray.length / threadsCount;
         for (int i = 0; i < threadsCount; i++) {
             int startPos = count * i;
             String defaultName = "Поток #";
@@ -28,7 +28,7 @@ public class ThreadsCalcArray {
                         long timeStart = System.currentTimeMillis() / 1000;
                         for (int j = startPos; j < startPos + count; j++) {
                             synchronized (ThreadsCalcArray.class) {
-                                array[j] = 1.14 * Math.cos(j) * Math.sin(j * 0.2) * Math.cos(j / 1.2);
+                                dArray[j] = 1.14 * Math.cos(j) * Math.sin(j * 0.2) * Math.cos(j / 1.2);
                             }
                         }
                         long timeStop = System.currentTimeMillis() / 1000;
@@ -46,11 +46,11 @@ public class ThreadsCalcArray {
     /**
      * Создает и запускает потоки на расчет
      *
-     * @param array        массив Double
+     * @param dArray        массив Double
      * @param threadsCount количество запускаемых потоков
      */
-    public static void createAndStartThreadsCalc(Double[] array, int threadsCount) {
-        ThreadsCalcArray threadCA = new ThreadsCalcArray(array, threadsCount);
+    public static void createAndStartThreadsCalc(Double[] dArray, int threadsCount) {
+        ThreadsCalcArray threadCA = new ThreadsCalcArray(dArray, threadsCount);
         threadCA.thrds.forEach(Thread::start);
         threadCA.thrds.forEach(thread -> {
             try {
@@ -64,13 +64,13 @@ public class ThreadsCalcArray {
     /**
      * Показывает содержимое массива
      *
-     * @param array    массив Double
+     * @param dArray    массив Double
      * @param startPos позиция начала показа
      * @param count    количество отображаемых документов
      */
-    public static void showArray(Double[] array, int startPos, int count) {
-        for (int i = startPos; (i < startPos + count) & (i < array.length); i++) {
-            System.out.printf("array[%d] = %9.6f\n", i, array[i]);
+    public static void showArray(Double[] dArray, int startPos, int count) {
+        for (int i = startPos; (i < startPos + count) && (i < dArray.length); i++) {
+            System.out.printf("array[%d] = %9.6f\n", i, dArray[i]);
         }
     }
 
@@ -78,16 +78,16 @@ public class ThreadsCalcArray {
      * Для теста посчитаем массив в maxThreadsCount потоках, выведем первые 50 и последние 50
      * рассчитанных элемента
      *
-     * @param internalArray   входящий массив Double
+     * @param dArray   входящий массив Double
      * @param maxThreadsCount количество потоков для теста
      */
-    public static void test(Double[] internalArray, int maxThreadsCount) {
-        ThreadsCalcArray.createAndStartThreadsCalc(internalArray, maxThreadsCount);
+    public static void test(Double[] dArray, int maxThreadsCount) {
+        ThreadsCalcArray.createAndStartThreadsCalc(dArray, maxThreadsCount);
         System.out.println();
         System.out.println("Для контроля, первые 50 элементов массива:");
-        ThreadsCalcArray.showArray(internalArray, 0, 50);
+        ThreadsCalcArray.showArray(dArray, 0, 50);
         System.out.println();
         System.out.println("Для контроля, последние 50 элементов массива:");
-        ThreadsCalcArray.showArray(internalArray, internalArray.length - 50, 50);
+        ThreadsCalcArray.showArray(dArray, dArray.length - 50, 50);
     }
 }
